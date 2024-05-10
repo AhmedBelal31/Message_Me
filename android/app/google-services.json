@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1004874790755",
+    "project_id": "message-me-11845",
+    "storage_bucket": "message-me-11845.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1004874790755:android:3ed7e30fd733176fa18556",
+        "android_client_info": {
+          "package_name": "com.c"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9LjNTb1idCYGd-LdBAfHUuLYsec88-LI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1004874790755:android:85e543fdaaaab4cfa18556",
+        "android_client_info": {
+          "package_name": "com.example.message_me"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9LjNTb1idCYGd-LdBAfHUuLYsec88-LI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
