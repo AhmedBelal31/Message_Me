@@ -5,6 +5,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final void Function(String)? onFieldSubmitted;
   final void Function(String)? onChanged;
+  final String? Function(String?)? validator;
   final bool obscureText;
 
   const CustomTextFormField({
@@ -13,7 +14,8 @@ class CustomTextFormField extends StatelessWidget {
     this.controller,
     this.onFieldSubmitted,
     this.onChanged,
-    this.obscureText = false ,
+    this.validator,
+    this.obscureText = false,
   });
 
   @override
@@ -22,6 +24,7 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       onFieldSubmitted: onFieldSubmitted,
       onChanged: onChanged,
+      validator: validator,
       obscureText: obscureText,
       decoration: InputDecoration(
         hintText: hint,
