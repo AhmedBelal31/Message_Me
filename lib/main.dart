@@ -28,13 +28,18 @@ class MyApp extends StatelessWidget {
         // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
         scaffoldBackgroundColor: Colors.white,
+        appBarTheme: const AppBarTheme(
+          iconTheme: IconThemeData(
+            color: Colors.white
+          )
+        )
       ),
       initialRoute: WelcomeScreen.screenRoute,
       routes: {
-        WelcomeScreen.screenRoute : (context)=>WelcomeScreen(),
-        SignInScreen.screenRoute : (context)=>SignInScreen(),
-        RegistrationScreen.screenRoute : (context)=>RegistrationScreen(),
-        ChatScreen.screenRoute : (context)=>ChatScreen(),
+        WelcomeScreen.screenRoute : (context)=>const WelcomeScreen(),
+        SignInScreen.screenRoute : (context)=>const SignInScreen(),
+        RegistrationScreen.screenRoute : (context)=>const RegistrationScreen(),
+        ChatScreen.screenRoute : (context)=>const ChatScreen(),
         
       },
 

@@ -31,8 +31,8 @@ class _ChatScreenState extends State<ChatScreen> {
               //! ToDo: SignOut Here
             },
             icon: const Icon(
-              Icons.close,
-              color: Colors.white,
+              Icons.close
+              
             ),
           ),
         ],

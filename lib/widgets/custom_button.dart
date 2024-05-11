@@ -4,13 +4,14 @@ class CustomButton extends StatelessWidget {
   final String title;
   final Function()? onPressed;
   final Color backgroundColor;
+  final bool isLoading;
 
-  const CustomButton({
-    super.key,
-    required this.title,
-    this.onPressed,
-    required this.backgroundColor,
-  });
+  const CustomButton(
+      {super.key,
+      required this.title,
+      this.onPressed,
+      required this.backgroundColor,
+      this.isLoading = false});
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +24,21 @@ class CustomButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.0),
       ),
       onPressed: onPressed,
-      child: Text(
-        title,
-        style: const TextStyle(
-          color: Colors.white,
-        ),
-      ),
+      child: isLoading
+          ? SizedBox(
+            height: 30,
+            width: 30,
+            child: CircularProgressIndicator(
+                color: Colors.yellow[900],
+              
+              ),
+          )
+          : Text(
+              title,
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
     );
   }
 }

@@ -5,7 +5,7 @@ import 'package:message_me/screens/sign_in_screen.dart';
 import '../widgets/custom_button.dart';
 
 class WelcomeScreen extends StatefulWidget {
-    static const screenRoute = 'welcome_screen';
+  static const screenRoute = 'welcome_screen';
   const WelcomeScreen({super.key});
 
   @override
@@ -16,7 +16,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-  
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
@@ -46,7 +45,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 title: 'Sign In',
                 backgroundColor: Colors.yellow[900]!,
                 onPressed: () {
-                    Navigator.of(context).pushNamed(SignInScreen.screenRoute);
+                  Navigator.of(context).pushNamed(SignInScreen.screenRoute);
                 },
               ),
             ),
@@ -54,7 +53,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               title: 'Register',
               backgroundColor: Colors.blue[800]!,
               onPressed: () {
-                Navigator.of(context).pushNamed(RegistrationScreen.screenRoute);
+                Navigator.of(context)
+                    .pushNamed(RegistrationScreen.screenRoute);
               },
             ),
           ],
