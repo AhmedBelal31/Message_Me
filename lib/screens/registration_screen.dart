@@ -4,6 +4,8 @@ import 'package:message_me/controller/registeration_cubit/registeration_cubit.da
 import 'package:message_me/controller/registeration_cubit/registeration_states.dart';
 import 'package:message_me/screens/chat_screen.dart';
 import 'package:message_me/widgets/custom_button.dart';
+import '../methods/validate_email.dart';
+import '../methods/validate_password.dart';
 import '../widgets/custom_text_field.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -21,27 +23,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   var formKey = GlobalKey<FormState>();
 
-  String? validateEmail(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Email is required';
-    } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-      return 'Enter a valid email';
-    }
-    return null;
-  }
-
-  String? validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Password is required';
-    } else if (value.length < 6) {
-      return 'Password must be at least 6 characters long';
-    } else if (!value.contains(RegExp(r'[A-Z]'))) {
-      return 'Password must contain at least one capital letter';
-    } else if (!value.contains(RegExp(r'[0-9]'))) {
-      return 'Password must contain at least one digit';
-    }
-    return null;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +79,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         
                         const SnackBar(
                           backgroundColor: Colors.green,
-                            content: Text("Registeration done Successfully ")),
+                            content: Text("Registration done Successfully ")),
                       );
                     }
                   },
