@@ -7,16 +7,17 @@ class CustomTextFormField extends StatelessWidget {
   final void Function(String)? onChanged;
   final String? Function(String?)? validator;
   final bool obscureText;
+  final AutovalidateMode? autovalidateMode;
 
-  const CustomTextFormField({
-    super.key,
-    required this.hint,
-    this.controller,
-    this.onFieldSubmitted,
-    this.onChanged,
-    this.validator,
-    this.obscureText = false,
-  });
+  const CustomTextFormField(
+      {super.key,
+      required this.hint,
+      this.controller,
+      this.onFieldSubmitted,
+      this.onChanged,
+      this.validator,
+      this.obscureText = false,
+      this.autovalidateMode});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +26,7 @@ class CustomTextFormField extends StatelessWidget {
       onFieldSubmitted: onFieldSubmitted,
       onChanged: onChanged,
       validator: validator,
+      autovalidateMode: autovalidateMode,
       obscureText: obscureText,
       decoration: InputDecoration(
         hintText: hint,
