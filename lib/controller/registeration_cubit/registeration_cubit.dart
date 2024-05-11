@@ -15,4 +15,21 @@ class RegisterationCubit extends Cubit<RegisterationStates> {
       emit(RegisterationFailureState(errorMessage: errorMessage));
     });
   }
+
+
+  void loginToAccount({required email, required String password}) {
+    emit(LoginLoadingState());
+    FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((value) {
+      emit(LoginSuccessfulState());
+    }).catchError((errorMessage) {
+      emit(LoginFailureState(errorMessage: errorMessage));
+    });
+  }
+
+
+
+
+
 }

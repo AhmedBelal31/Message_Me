@@ -19,7 +19,6 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   late String email;
   late String password;
-  bool isLoading = false;
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
   var formKey = GlobalKey<FormState>();
 
