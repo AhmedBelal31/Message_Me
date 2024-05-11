@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:message_me/screens/chat_screen.dart';
 import 'package:message_me/widgets/custom_button.dart';
 import '../widgets/custom_text_field.dart';
 
 class SignInScreen extends StatefulWidget {
+  static const screenRoute = 'signin_screen';
   const SignInScreen({super.key});
 
   @override
@@ -31,11 +33,14 @@ class _SignInScreenState extends State<SignInScreen> {
               hint: "Enter your Password ",
               obscureText: true,
             ),
-              const SizedBox(height: 10),
+            const SizedBox(height: 10),
             CustomButton(
               title: 'Sign In',
               backgroundColor: Colors.yellow[900]!,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context)
+                    .pushNamed(ChatScreen.screenRoute);
+              },
             )
           ],
         ),

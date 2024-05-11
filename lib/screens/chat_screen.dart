@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
+    static const screenRoute = 'chat_screen';
   const ChatScreen({super.key});
 
   @override
@@ -11,6 +12,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+    
       appBar: AppBar(
         backgroundColor: Colors.yellow[900],
         title: Row(
@@ -58,7 +60,9 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                 ),
-                TextButton(onPressed: () {}, child: Text(
+                TextButton(onPressed: () {
+                  //! Send Message Here ....
+                }, child: Text(
                   'send' ,
                   style: TextStyle(
                     color: Colors.blue[800] ,

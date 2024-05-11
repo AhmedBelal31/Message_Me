@@ -1,5 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:message_me/screens/chat_screen.dart';
+import 'package:message_me/screens/registration_screen.dart';
+import 'package:message_me/screens/sign_in_screen.dart';
 import 'package:message_me/screens/welcome_screen.dart';
 // Import the generated file
 import 'firebase_options.dart';
@@ -22,10 +25,18 @@ class MyApp extends StatelessWidget {
       title: 'Message Me',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        scaffoldBackgroundColor: Colors.white,
       ),
-      home: WelcomeScreen(),
+      initialRoute: WelcomeScreen.screenRoute,
+      routes: {
+        WelcomeScreen.screenRoute : (context)=>WelcomeScreen(),
+        SignInScreen.screenRoute : (context)=>SignInScreen(),
+        RegistrationScreen.screenRoute : (context)=>RegistrationScreen(),
+        ChatScreen.screenRoute : (context)=>ChatScreen(),
+        
+      },
 
     );
   }

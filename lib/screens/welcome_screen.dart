@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:message_me/screens/registration_screen.dart';
+import 'package:message_me/screens/sign_in_screen.dart';
 
 import '../widgets/custom_button.dart';
 
 class WelcomeScreen extends StatefulWidget {
+    static const screenRoute = 'welcome_screen';
   const WelcomeScreen({super.key});
 
   @override
@@ -13,7 +16,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+  
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: Column(
@@ -42,13 +45,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               child: CustomButton(
                 title: 'Sign In',
                 backgroundColor: Colors.yellow[900]!,
-                onPressed: () {},
+                onPressed: () {
+                    Navigator.of(context).pushNamed(SignInScreen.screenRoute);
+                },
               ),
             ),
             CustomButton(
               title: 'Register',
               backgroundColor: Colors.blue[800]!,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(RegistrationScreen.screenRoute);
+              },
             ),
           ],
         ),
