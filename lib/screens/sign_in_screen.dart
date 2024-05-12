@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:message_me/controller/registeration_cubit/registeration_cubit.dart';
@@ -24,68 +25,81 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Form(
-          key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(
-                height: 180,
-                child: Image.asset('images/logo.png'),
-              ),
-              const SizedBox(height: 50),
-              // ignore: prefer_const_constructors
-              CustomTextFormField(
-                hint: "Enter your Email ",
-                autovalidateMode: autovalidateMode,
-                keyboardType: TextInputType.emailAddress,
-                validator: validateEmail,
-                onChanged: (value) {
-                  email = value;
-                },
-              ),
-              const SizedBox(height: 8),
-              CustomTextFormField(
-                hint: "Enter your Password ",
-                autovalidateMode: autovalidateMode,
-                keyboardType: TextInputType.visiblePassword,
-                obscureText: true,
-                validator: validatePassword,
-                onChanged: (value) {
-                  password = value;
-                },
-              ),
-              const SizedBox(height: 10),
-              BlocBuilder<RegisterationCubit, RegisterationStates>(
-                builder: (context, state) {
-                  return CustomButton(
-                    title: 'Sign In',
-                    backgroundColor: Colors.yellow[900]!,
-                    onPressed: () {
-                      if (state is RegisterationFailureState) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(state.errorMessage)),
-                        );
-                      }
-
-                      if (state is RegisterationSuccessfulState) {
-                        Navigator.of(context)
-                            .pushReplacementNamed(ChatScreen.screenRoute);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              backgroundColor: Colors.green,
-                              content: Text("Registration done Successfully ")),
-                        );
-                      }
-                    },
-                  );
-                },
-              )
-            ],
+    return BlocProvider(
+      create: (context) => RegisterationCubit(),
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(
+                  height: 180,
+                  child: Image.asset('images/logo.png'),
+                ),
+                const SizedBox(height: 50),
+                // ignore: prefer_const_constructors
+                CustomTextFormField(
+                  hint: "Enter your Email ",
+                  autovalidateMode: autovalidateMode,
+                  keyboardType: TextInputType.emailAddress,
+                  validator: validateEmail,
+                  onChanged: (value) {
+                    email = value;
+                  },
+                ),
+                const SizedBox(height: 8),
+                CustomTextFormField(
+                  hint: "Enter your Password ",
+                  autovalidateMode: autovalidateMode,
+                  keyboardType: TextInputType.visiblePassword,
+                  obscureText: true,
+                  validator: validatePassword,
+                  onChanged: (value) {
+                    password = value;
+                  },
+                ),
+                const SizedBox(height: 10),
+                BlocConsumer<RegisterationCubit, RegisterationStates>(
+                  listener: (context, state) {
+                    if (state is LoginFailureState) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(state.errorMessage)),
+                      );
+                    }
+                    if (state is LoginSuccessfulState) {
+                      Navigator.of(context)
+                          .pushReplacementNamed(ChatScreen.screenRoute);
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   const SnackBar(
+                      //       backgroundColor: Colors.green,
+                      //       content: Text("Login done Successfully ")),
+                      // );
+                    }
+                  },
+                  builder: (context, state) {
+                    return CustomButton(
+                      title: 'Sign In',
+                      isLoading: state is RegisterationLoadingState,
+                      backgroundColor: Colors.yellow[900]!,
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          BlocProvider.of<RegisterationCubit>(context)
+                              .loginToAccount(email: email, password: password);
+                        } else {
+                          setState(() {
+                            autovalidateMode = AutovalidateMode.always;
+                          });
+                        }
+                      },
+                    );
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),
