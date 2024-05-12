@@ -44,9 +44,9 @@ class _SignInScreenState extends State<SignInScreen> {
                 // ignore: prefer_const_constructors
                 CustomTextFormField(
                   hint: "Enter your Email ",
-                  autovalidateMode: autovalidateMode,
+                autovalidateMode: autovalidateMode,
                   keyboardType: TextInputType.emailAddress,
-                  validator: validateEmail,
+                validator: validateEmail,
                   onChanged: (value) {
                     email = value;
                   },
@@ -73,11 +73,11 @@ class _SignInScreenState extends State<SignInScreen> {
                     if (state is LoginSuccessfulState) {
                       Navigator.of(context)
                           .pushReplacementNamed(ChatScreen.screenRoute);
-                      // ScaffoldMessenger.of(context).showSnackBar(
-                      //   const SnackBar(
-                      //       backgroundColor: Colors.green,
-                      //       content: Text("Login done Successfully ")),
-                      // );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                            backgroundColor: Colors.green,
+                            content: Text("Login done Successfully ")),
+                      );
                     }
                   },
                   builder: (context, state) {
