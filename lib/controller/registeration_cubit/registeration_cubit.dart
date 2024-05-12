@@ -93,4 +93,31 @@ String handleFirebaseRegisterErrors(error) {
     }
     return errorMessage;
   }
+
+
+// Create SignOut Method 
+
+
+void signOut() async {
+  emit(SignoutLoadingState());
+  FirebaseAuth.instance.signOut().then((_) {
+      emit(SignoutSuccessfulState());
+    }).catchError((error) {
+      String errorMessage = "Error signing out";
+      if (error is FirebaseAuthException) {
+        errorMessage = error.message ?? "Unknown error";
+      }
+      emit(SignoutFailureState(errorMessage: errorMessage));
+    });
+  }
+  }
+
+
+
+
+
+
+
+
+
 }
