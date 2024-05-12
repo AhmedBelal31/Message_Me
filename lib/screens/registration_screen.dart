@@ -84,7 +84,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   },
                   builder: (context, state) {
                     return CustomButton(
-                      isLoading: state is RegisterationLoadingState,
+                    isLoading: state is RegisterationLoadingState,
+                    
+                      loadingColor: Colors.yellow[900]!,
                       title: 'Register',
                       backgroundColor: Colors.blue[800]!,
                       onPressed: () {

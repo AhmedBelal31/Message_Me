@@ -72,7 +72,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     }
                     if (state is LoginSuccessfulState) {
                       Navigator.of(context)
-                          .pushReplacementNamed(ChatScreen.screenRoute);
+                          .pushReplacementNamed(ChatScreen.screenRoute , arguments:email );
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                             backgroundColor: Colors.green,
@@ -84,6 +84,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     return CustomButton(
                       title: 'Sign In',
                       isLoading: state is RegisterationLoadingState,
+                      loadingColor:Colors.blue[800]! ,
                       backgroundColor: Colors.yellow[900]!,
                       onPressed: () {
                         if (formKey.currentState!.validate()) {

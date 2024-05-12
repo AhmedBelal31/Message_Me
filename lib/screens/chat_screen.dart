@@ -14,7 +14,9 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   @override
+
   Widget build(BuildContext context) {
+    String email = ModalRoute.of(context)!.settings.arguments as String ;
     return BlocProvider(
       create: (context) => RegisterationCubit(),
       child: Scaffold(
@@ -24,8 +26,8 @@ class _ChatScreenState extends State<ChatScreen> {
             children: [
               Image.asset('images/logo.png', height: 25),
               const SizedBox(width: 10),
-              const Text(
-                'MessageMe',
+               const Text(
+               'MessageMe',
                 style: TextStyle(color: Colors.white),
               )
             ],
@@ -57,7 +59,9 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(),
+            Container(
+            
+            ),
             Container(
               decoration: BoxDecoration(
                   border: Border(

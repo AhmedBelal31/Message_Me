@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 class RegisterationStates {}
 
 class RegisterationInitialState extends RegisterationStates {}
 
-//Register States 
+//Register States
 class RegisterationLoadingState extends RegisterationStates {}
 
 class RegisterationSuccessfulState extends RegisterationStates {}
@@ -12,16 +14,18 @@ class RegisterationFailureState extends RegisterationStates {
   RegisterationFailureState({required this.errorMessage});
 }
 
-// Login States 
+// Login States
 class LoginLoadingState extends RegisterationStates {}
 
-class LoginSuccessfulState extends RegisterationStates {}
+class LoginSuccessfulState extends RegisterationStates {
+  UserCredential user;
+  LoginSuccessfulState({required this.user});
+}
 
 class LoginFailureState extends RegisterationStates {
   dynamic errorMessage;
   LoginFailureState({required this.errorMessage});
 }
-
 
 class SignoutLoadingState extends RegisterationStates {}
 

@@ -5,52 +5,52 @@ import 'registeration_states.dart';
 class RegisterationCubit extends Cubit<RegisterationStates> {
   RegisterationCubit() : super(RegisterationInitialState());
 
-
-
-void registerAccount({required String email, required String password}) {
-  emit(RegisterationLoadingState());
-  FirebaseAuth.instance
-      .createUserWithEmailAndPassword(email: email, password: password)
-      .then((value) {
-    emit(RegisterationSuccessfulState());
-  }).catchError((error) {
-    String errorMessage = handleFirebaseRegisterErrors(error);
-    emit(RegisterationFailureState(errorMessage: errorMessage));
-  });
-}
-
-String handleFirebaseRegisterErrors(error) {
-    String errorMessage = 'An error occurred';
-  if (error is FirebaseAuthException) {
-    // Handle specific Firebase Auth errors
-    switch (error.code) {
-      case 'weak-password':
-        errorMessage = 'The password provided is too weak.';
-        break;
-      case 'email-already-in-use':
-        errorMessage = 'The account already exists for that email.';
-        break;
-      case 'invalid-email':
-        errorMessage = 'The email address is invalid.';
-        break;
-      // Handle other Firebase Auth errors here
-      default:
-        errorMessage = 'Authentication failed. Please try again later.';
-        break;
-    }
-  } else {
-    // Handle other errors that are not related to Firebase Auth
-    errorMessage = 'An unexpected error occurred. Please try again later.';
+  String userEmail = '';
+  void registerAccount({required String email, required String password}) {
+    emit(RegisterationLoadingState());
+    FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .then((value) {
+      emit(RegisterationSuccessfulState());
+    }).catchError((error) {
+      String errorMessage = handleFirebaseRegisterErrors(error);
+      emit(RegisterationFailureState(errorMessage: errorMessage));
+    });
   }
-  return errorMessage;
-}
+
+  String handleFirebaseRegisterErrors(error) {
+    String errorMessage = 'An error occurred';
+    if (error is FirebaseAuthException) {
+      // Handle specific Firebase Auth errors
+      switch (error.code) {
+        case 'weak-password':
+          errorMessage = 'The password provided is too weak.';
+          break;
+        case 'email-already-in-use':
+          errorMessage = 'The account already exists for that email.';
+          break;
+        case 'invalid-email':
+          errorMessage = 'The email address is invalid.';
+          break;
+        // Handle other Firebase Auth errors here
+        default:
+          errorMessage = 'Authentication failed. Please try again later.';
+          break;
+      }
+    } else {
+      // Handle other errors that are not related to Firebase Auth
+      errorMessage = 'An unexpected error occurred. Please try again later.';
+    }
+    return errorMessage;
+  }
 
   void loginToAccount({required String email, required String password}) {
     emit(LoginLoadingState());
     FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password)
-        .then((value) {
-      emit(LoginSuccessfulState());
+        .then((user) {
+      
+      emit(LoginSuccessfulState(user: user));
     }).catchError(
       (error) {
         String errorMessage = 'An error occurred. Please try again later.';
@@ -86,21 +86,18 @@ String handleFirebaseRegisterErrors(error) {
           break;
         // Handle other specific error cases here
       }
-    }
-    else {
+    } else {
       // Handle other errors that are not related to Firebase Auth
       errorMessage = 'An unexpected error occurred. Please try again later.';
     }
     return errorMessage;
   }
 
+// Create SignOut Method
 
-// Create SignOut Method 
-
-
-void signOut() async {
-  emit(SignoutLoadingState());
-  FirebaseAuth.instance.signOut().then((_) {
+  void signOut() async {
+    emit(SignoutLoadingState());
+    FirebaseAuth.instance.signOut().then((_) {
       emit(SignoutSuccessfulState());
     }).catchError((error) {
       String errorMessage = "Error signing out";
@@ -110,14 +107,4 @@ void signOut() async {
       emit(SignoutFailureState(errorMessage: errorMessage));
     });
   }
-  }
-
-
-
-
-
-
-
-
-
-
+}
