@@ -20,6 +20,6 @@ class LoginLoadingState extends RegisterationStates {}
 class LoginSuccessfulState extends RegisterationStates {}
 
 class LoginFailureState extends RegisterationStates {
-  String errorMessage;
+  dynamic errorMessage;
   LoginFailureState({required this.errorMessage});
 }
