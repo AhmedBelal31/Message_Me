@@ -14,9 +14,9 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   @override
-
   Widget build(BuildContext context) {
-    String email = ModalRoute.of(context)!.settings.arguments as String ;
+    String email = ModalRoute.of(context)!.settings.arguments as String;
+    String message = '';
     return BlocProvider(
       create: (context) => RegisterationCubit(),
       child: Scaffold(
@@ -26,8 +26,8 @@ class _ChatScreenState extends State<ChatScreen> {
             children: [
               Image.asset('images/logo.png', height: 25),
               const SizedBox(width: 10),
-               const Text(
-               'MessageMe',
+              const Text(
+                'MessageMe',
                 style: TextStyle(color: Colors.white),
               )
             ],
@@ -59,9 +59,7 @@ class _ChatScreenState extends State<ChatScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Container(
-            
-            ),
+            Container(),
             Container(
               decoration: BoxDecoration(
                   border: Border(
@@ -78,20 +76,30 @@ class _ChatScreenState extends State<ChatScreen> {
                             EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                         hintText: 'Write your message here ...',
                       ),
+                      onChanged: (value) {
+                        message = value;
+                      },
                     ),
                   ),
-                  TextButton(
-                      onPressed: () {
-                        //! Send Message Here ....
-                      },
-                      child: Text(
-                        'send',
-                        style: TextStyle(
-                          color: Colors.blue[800],
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ))
+                  BlocBuilder<RegisterationCubit, RegisterationStates>(
+                    builder: (context, state) {
+                      return TextButton(
+                          onPressed: () {
+                            //! Send Message Here ....
+                            BlocProvider.of<RegisterationCubit>(context)
+                                .addMessageToFireStore(
+                                    message: message, email: email);
+                          },
+                          child: Text(
+                            'send',
+                            style: TextStyle(
+                              color: Colors.blue[800],
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ));
+                    },
+                  )
                 ],
               ),
             )

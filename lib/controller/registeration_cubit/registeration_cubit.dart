@@ -1,5 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:message_me/models/message_model.dart';
+import '../../const.dart';
 import 'registeration_states.dart';
 
 class RegisterationCubit extends Cubit<RegisterationStates> {
@@ -49,7 +52,6 @@ class RegisterationCubit extends Cubit<RegisterationStates> {
     FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password)
         .then((user) {
-      
       emit(LoginSuccessfulState(user: user));
     }).catchError(
       (error) {
@@ -106,5 +108,12 @@ class RegisterationCubit extends Cubit<RegisterationStates> {
       }
       emit(SignoutFailureState(errorMessage: errorMessage));
     });
+  }
+
+  void addMessageToFireStore({required message, required String email}) {
+      MessageModel messageModel =
+          MessageModel(message: message, email: email, dateTime: DateTime.now());
+
+    FirebaseFirestore.instance.collection(kMessageCollection).add(messageModel.toJson());
   }
 }
