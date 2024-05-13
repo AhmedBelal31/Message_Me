@@ -111,9 +111,51 @@ class RegisterationCubit extends Cubit<RegisterationStates> {
   }
 
   void addMessageToFireStore({required message, required String email}) {
-      MessageModel messageModel =
-          MessageModel(message: message, email: email, dateTime: DateTime.now());
+    MessageModel messageModel =
+        MessageModel(message: message, email: email, dateTime: DateTime.now());
 
-    FirebaseFirestore.instance.collection(kMessageCollection).add(messageModel.toJson());
+    FirebaseFirestore.instance
+        .collection(kMessageCollection)
+        .add(messageModel.toJson());
+  }
+
+  List<MessageModel> messages = [];
+  // void getMessagesFromFireStore() {
+  //   emit(GetMessagesLoadingState());
+  //   FirebaseFirestore.instance
+  //       .collection(kMessageCollection)
+  //       .orderBy('dateTime', descending: true)
+  //       .get()
+  //       .then((snapshot) {
+  //     messages = snapshot.docs
+  //         .map((doc) => MessageModel.fromJson(doc.data()))
+  //         .toList();
+  //     emit(GetMessagesSuccessfulState(messages: messages));
+  //   }).catchError((error) {
+  //     String errorMessage = "Error getting messages";
+  //     if (error is FirebaseAuthException) {
+  //       errorMessage = error.message ?? "Unknown error";
+  //     }
+  //     emit(GetMessagesFromFireStoreState(errorMessage: errorMessage));
+  //   });
+  // }
+
+  void getMessagesFromFireStore() {
+    emit(GetMessagesLoadingState());
+    FirebaseFirestore.instance
+        .collection(kMessageCollection)
+        .orderBy('dateTime', descending: true)
+        .snapshots()
+        .listen(
+      (message) {
+        // messages = message.docs
+        //     .map((doc) => MessageModel.fromJson(doc.data()))
+        //     .toList();
+        for (var e in message.docs) {
+          messages.add(MessageModel.fromJson(e.data()));
+        }
+        emit(GetMessagesSuccessfulState(messages: messages));
+      },
+    );
   }
 }
