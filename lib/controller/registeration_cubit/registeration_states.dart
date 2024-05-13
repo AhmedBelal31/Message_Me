@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:message_me/models/message_model.dart';
 
 class RegisterationStates {}
 
@@ -34,4 +35,23 @@ class SignoutSuccessfulState extends RegisterationStates {}
 class SignoutFailureState extends RegisterationStates {
   dynamic errorMessage;
   SignoutFailureState({required this.errorMessage});
+}
+
+//Get Messages from Firebase 
+
+class GetMessagesLoadingState extends RegisterationStates 
+{
+
+}
+class GetMessagesSuccessfulState extends RegisterationStates 
+{
+  List<MessageModel> messages;
+
+  GetMessagesSuccessfulState({required this.messages});
+}
+class GetMessagesFromFireStoreState extends RegisterationStates 
+{
+  String errorMessage ;
+
+  GetMessagesFromFireStoreState({required this.errorMessage});
 }
