@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:message_me/models/message_model.dart';
 import '../../const.dart';
@@ -147,13 +148,15 @@ class RegisterationCubit extends Cubit<RegisterationStates> {
         .orderBy('dateTime', descending: true)
         .snapshots()
         .listen(
-      (message) {
-        // messages = message.docs
-        //     .map((doc) => MessageModel.fromJson(doc.data()))
-        //     .toList();
-        for (var e in message.docs) {
-          messages.add(MessageModel.fromJson(e.data()));
-        }
+      (messagesCollection) {
+        messages = [];
+        // for (var e in messagesCollection.docs) {
+        //   messages.add(MessageModel.fromJson(e.data()));
+        // }
+
+        messages = messagesCollection.docs
+            .map((e) => MessageModel.fromJson(e.data()))
+            .toList();
         emit(GetMessagesSuccessfulState(messages: messages));
       },
     );
