@@ -1,6 +1,6 @@
 class MessageModel {
   String message;
-  DateTime dateTime;
+  String dateTime;
   String email;
 
   MessageModel({
