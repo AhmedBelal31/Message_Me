@@ -26,7 +26,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RegisterationCubit(),
+      create: (context) => RegistrationCubit(),
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -63,15 +63,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   },
                 ),
                 const SizedBox(height: 10),
-                BlocConsumer<RegisterationCubit, RegisterationStates>(
+                BlocConsumer<RegistrationCubit, RegistrationStates>(
                   listener: (context, state) {
-                    if (state is RegisterationFailureState) {
+                    if (state is RegistrationFailureState) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(state.errorMessage)),
                       );
                     }
 
-                    if (state is RegisterationSuccessfulState) {
+                    if (state is RegistrationSuccessfulState) {
                       Navigator.of(context)
                           .pushReplacementNamed(ChatScreen.screenRoute);
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -84,14 +84,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   },
                   builder: (context, state) {
                     return CustomButton(
-                    isLoading: state is RegisterationLoadingState,
+                    isLoading: state is RegistrationLoadingState,
                     
                       loadingColor: Colors.yellow[900]!,
                       title: 'Register',
                       backgroundColor: Colors.blue[800]!,
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          BlocProvider.of<RegisterationCubit>(context)
+                          BlocProvider.of<RegistrationCubit>(context)
                               .registerAccount(
                                   email: email, password: password);
                         } else {

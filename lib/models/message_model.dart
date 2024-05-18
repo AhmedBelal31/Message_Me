@@ -1,28 +1,27 @@
 class MessageModel {
-  String message;
-  String dateTime;
-  String email;
+  final String message;
+  final String email;
+  final String messageTime;
 
   MessageModel({
     required this.message,
     required this.email,
-    required this.dateTime,
+    required this.messageTime,
   });
 
   factory MessageModel.fromJson(Map<String, dynamic> json) {
     return MessageModel(
-      message: json['message'],
-      email: json['email'],
-      dateTime: json['dateTime'],
+      message: json['message'] ?? '',
+      email: json['email'] ?? '',
+      messageTime: json['messageTime'] ?? '',
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'message' :message ,
-      'email' :email ,
-      'dateTime' :dateTime ,
-
+      'message': message,
+      'email': email,
+      'messageTime': messageTime,
     };
   }
 }

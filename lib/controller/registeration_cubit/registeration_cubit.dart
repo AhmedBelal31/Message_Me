@@ -1,24 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:message_me/controller/registeration_cubit/registeration_states.dart';
 import 'package:message_me/models/message_model.dart';
 import '../../const.dart';
-import 'registeration_states.dart';
 
-class RegisterationCubit extends Cubit<RegisterationStates> {
-  RegisterationCubit() : super(RegisterationInitialState());
+
+class RegistrationCubit extends Cubit<RegistrationStates> {
+  RegistrationCubit() : super(RegistrationInitialState());
 
   String userEmail = '';
   void registerAccount({required String email, required String password}) {
-    emit(RegisterationLoadingState());
+    emit(RegistrationLoadingState());
+    print('Hello world Body 11111!');
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((value) {
-      emit(RegisterationSuccessfulState());
+          print('Hello world Body !');
+      emit(RegistrationSuccessfulState());
     }).catchError((error) {
       String errorMessage = handleFirebaseRegisterErrors(error);
-      emit(RegisterationFailureState(errorMessage: errorMessage));
+      emit(RegistrationFailureState(errorMessage: errorMessage));
     });
   }
 
@@ -53,6 +55,7 @@ class RegisterationCubit extends Cubit<RegisterationStates> {
     FirebaseAuth.instance
         .signInWithEmailAndPassword(email: email, password: password)
         .then((user) {
+
       emit(LoginSuccessfulState(user: user));
     }).catchError(
       (error) {
@@ -111,9 +114,9 @@ class RegisterationCubit extends Cubit<RegisterationStates> {
     });
   }
 
-  void addMessageToFireStore({required message, required String email}) {
-    MessageModel messageModel =
-        MessageModel(message: message, email: email, dateTime: DateTime.now());
+  void addMessageToFireStore({required message, required String email , required String dateTime}) {
+    MessageModel messageModel = MessageModel(
+        message: message, email: email, messageTime: dateTime);
 
     FirebaseFirestore.instance
         .collection(kMessageCollection)
@@ -121,42 +124,25 @@ class RegisterationCubit extends Cubit<RegisterationStates> {
   }
 
   List<MessageModel> messages = [];
-  // void getMessagesFromFireStore() {
-  //   emit(GetMessagesLoadingState());
-  //   FirebaseFirestore.instance
-  //       .collection(kMessageCollection)
-  //       .orderBy('dateTime', descending: true)
-  //       .get()
-  //       .then((snapshot) {
-  //     messages = snapshot.docs
-  //         .map((doc) => MessageModel.fromJson(doc.data()))
-  //         .toList();
-  //     emit(GetMessagesSuccessfulState(messages: messages));
-  //   }).catchError((error) {
-  //     String errorMessage = "Error getting messages";
-  //     if (error is FirebaseAuthException) {
-  //       errorMessage = error.message ?? "Unknown error";
-  //     }
-  //     emit(GetMessagesFromFireStoreState(errorMessage: errorMessage));
-  //   });
-  // }
 
   void getMessagesFromFireStore() {
     emit(GetMessagesLoadingState());
     FirebaseFirestore.instance
         .collection(kMessageCollection)
-        .orderBy('dateTime', descending: true)
         .snapshots()
         .listen(
       (messagesCollection) {
         messages = [];
-        // for (var e in messagesCollection.docs) {
-        //   messages.add(MessageModel.fromJson(e.data()));
-        // }
+        for (var e in messagesCollection.docs) {
+          messages.add(MessageModel.fromJson(e.data()));
+          print('message is ${e.data()}');
+        }
 
-        messages = messagesCollection.docs
-            .map((e) => MessageModel.fromJson(e.data()))
-            .toList();
+        // messages = messagesCollection.docs
+        //     .map((e) => MessageModel.fromJson(e.data()))
+        //     .toList();
+
+        print('messages is ${messages}');
         emit(GetMessagesSuccessfulState(messages: messages));
       },
     );

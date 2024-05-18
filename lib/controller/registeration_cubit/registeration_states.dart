@@ -1,55 +1,55 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:message_me/models/message_model.dart';
 
-class RegisterationStates {}
+class RegistrationStates {}
 
-class RegisterationInitialState extends RegisterationStates {}
+class RegistrationInitialState extends RegistrationStates {}
 
 //Register States
-class RegisterationLoadingState extends RegisterationStates {}
+class RegistrationLoadingState extends RegistrationStates {}
 
-class RegisterationSuccessfulState extends RegisterationStates {}
+class RegistrationSuccessfulState extends RegistrationStates {}
 
-class RegisterationFailureState extends RegisterationStates {
+class RegistrationFailureState extends RegistrationStates {
   String errorMessage;
-  RegisterationFailureState({required this.errorMessage});
+  RegistrationFailureState({required this.errorMessage});
 }
 
 // Login States
-class LoginLoadingState extends RegisterationStates {}
+class LoginLoadingState extends RegistrationStates {}
 
-class LoginSuccessfulState extends RegisterationStates {
+class LoginSuccessfulState extends RegistrationStates {
   UserCredential user;
   LoginSuccessfulState({required this.user});
 }
 
-class LoginFailureState extends RegisterationStates {
+class LoginFailureState extends RegistrationStates {
   dynamic errorMessage;
   LoginFailureState({required this.errorMessage});
 }
 
-class SignoutLoadingState extends RegisterationStates {}
+class SignoutLoadingState extends RegistrationStates {}
 
-class SignoutSuccessfulState extends RegisterationStates {}
+class SignoutSuccessfulState extends RegistrationStates {}
 
-class SignoutFailureState extends RegisterationStates {
+class SignoutFailureState extends RegistrationStates {
   dynamic errorMessage;
   SignoutFailureState({required this.errorMessage});
 }
 
 //Get Messages from Firebase 
 
-class GetMessagesLoadingState extends RegisterationStates 
+class GetMessagesLoadingState extends RegistrationStates
 {
 
 }
-class GetMessagesSuccessfulState extends RegisterationStates 
+class GetMessagesSuccessfulState extends RegistrationStates
 {
   List<MessageModel> messages;
 
   GetMessagesSuccessfulState({required this.messages});
 }
-class GetMessagesFromFireStoreState extends RegisterationStates 
+class GetMessagesFromFireStoreState extends RegistrationStates
 {
   String errorMessage ;
 

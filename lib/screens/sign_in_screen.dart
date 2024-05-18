@@ -26,7 +26,7 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => RegisterationCubit(),
+      create: (context) => RegistrationCubit(),
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -63,7 +63,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   },
                 ),
                 const SizedBox(height: 10),
-                BlocConsumer<RegisterationCubit, RegisterationStates>(
+                BlocConsumer<RegistrationCubit, RegistrationStates>(
                   listener: (context, state) {
                     if (state is LoginFailureState) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -83,12 +83,12 @@ class _SignInScreenState extends State<SignInScreen> {
                   builder: (context, state) {
                     return CustomButton(
                       title: 'Sign In',
-                      isLoading: state is RegisterationLoadingState,
+                      isLoading: state is RegistrationLoadingState,
                       loadingColor:Colors.blue[800]! ,
                       backgroundColor: Colors.yellow[900]!,
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          BlocProvider.of<RegisterationCubit>(context)
+                          BlocProvider.of<RegistrationCubit>(context)
                               .loginToAccount(email: email, password: password);
                         } else {
                           setState(() {
