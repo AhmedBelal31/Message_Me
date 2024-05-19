@@ -157,6 +157,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final chatController = TextEditingController();
   String message = '';
+  ScrollController listController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -175,6 +176,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   child: state is GetMessagesLoadingState
                       ? const Center(child: CircularProgressIndicator())
                       : ListView.separated(
+                          controller: listController,
+                          reverse: true,
                           itemBuilder: (context, index) {
                             MessageModel messages = cubit.messages[index];
                             return messages.email == email
@@ -187,12 +190,16 @@ class _ChatScreenState extends State<ChatScreen> {
                           itemCount: cubit.messages.length,
                         ),
                 ),
+               const SizedBox(height: 10),
                 Container(
+                  margin: const EdgeInsets.only(bottom: 10),
                   decoration: BoxDecoration(
-                      border: Border(
-                          top: BorderSide(
-                    color: Colors.yellow[900]!,
-                  ))),
+                    border: Border(
+                      top: BorderSide(
+                        color: Colors.yellow[900]!,
+                      ),
+                    ),
+                  ),
                   child: Row(
                     children: [
                       Expanded(
@@ -215,10 +222,15 @@ class _ChatScreenState extends State<ChatScreen> {
                             cubit.addMessageToFireStore(
                               message: message,
                               email: email,
-                              dateTime: "22/10//2024",
+                              dateTime: DateTime.now().toString(),
                             );
                             chatController.clear();
-                            message = '';
+                            //message = '';
+                            listController.animateTo(
+                              0,
+                              duration: const Duration(milliseconds: 600),
+                              curve: Curves.easeInOut,
+                            );
                           }
                         },
                         child: Text(
@@ -241,36 +253,37 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  AppBar buildAppBar(RegistrationStates state, RegistrationCubit cubit, BuildContext context) {
+  AppBar buildAppBar(
+      RegistrationStates state, RegistrationCubit cubit, BuildContext context) {
     return AppBar(
-            backgroundColor: Colors.yellow[900],
-            title: Row(
-              children: [
-                Image.asset('images/logo.png', height: 25),
-                const SizedBox(width: 10),
-                const Text(
-                  'Chat',
-                  style: TextStyle(color: Colors.white),
-                )
-              ],
-            ),
-            actions: [
-              state is! SignoutLoadingState
-                  ? IconButton(
-                      onPressed: () {
-                        cubit.signOut();
-                        Navigator.of(context)
-                            .pushReplacementNamed(WelcomeScreen.screenRoute);
-                      },
-                      icon: const Icon(Icons.close),
-                    )
-                  : const SizedBox(
-                      height: 25,
-                      width: 25,
-                      child: CircularProgressIndicator(),
-                    ),
-              const SizedBox(width: 20),
-            ],
-          );
+      backgroundColor: Colors.yellow[900],
+      title: Row(
+        children: [
+          Image.asset('images/logo.png', height: 25),
+          const SizedBox(width: 10),
+          const Text(
+            'Chat',
+            style: TextStyle(color: Colors.white),
+          )
+        ],
+      ),
+      actions: [
+        state is! SignoutLoadingState
+            ? IconButton(
+                onPressed: () {
+                  cubit.signOut();
+                  Navigator.of(context)
+                      .pushReplacementNamed(WelcomeScreen.screenRoute);
+                },
+                icon: const Icon(Icons.close),
+              )
+            : const SizedBox(
+                height: 25,
+                width: 25,
+                child: CircularProgressIndicator(),
+              ),
+        const SizedBox(width: 20),
+      ],
+    );
   }
 }
