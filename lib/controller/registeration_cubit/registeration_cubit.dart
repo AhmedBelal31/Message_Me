@@ -12,11 +12,10 @@ class RegistrationCubit extends Cubit<RegistrationStates> {
   String userEmail = '';
   void registerAccount({required String email, required String password}) {
     emit(RegistrationLoadingState());
-    print('Hello world Body 11111!');
+
     FirebaseAuth.instance
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((value) {
-          print('Hello world Body !');
       emit(RegistrationSuccessfulState());
     }).catchError((error) {
       String errorMessage = handleFirebaseRegisterErrors(error);
@@ -129,6 +128,7 @@ class RegistrationCubit extends Cubit<RegistrationStates> {
     emit(GetMessagesLoadingState());
     FirebaseFirestore.instance
         .collection(kMessageCollection)
+        .orderBy('messageTime' , descending: true)
         .snapshots()
         .listen(
       (messagesCollection) {
@@ -142,7 +142,7 @@ class RegistrationCubit extends Cubit<RegistrationStates> {
         //     .map((e) => MessageModel.fromJson(e.data()))
         //     .toList();
 
-        print('messages is ${messages}');
+        print('messages is $messages');
         emit(GetMessagesSuccessfulState(messages: messages));
       },
     );

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:message_me/controller/registeration_cubit/registeration_cubit.dart';
@@ -73,9 +74,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                     if (state is RegistrationSuccessfulState) {
                       Navigator.of(context)
-                          .pushReplacementNamed(ChatScreen.screenRoute);
+                          .pushReplacementNamed(ChatScreen.screenRoute , arguments:email);
                       ScaffoldMessenger.of(context).showSnackBar(
-        
+
                         const SnackBar(
                           backgroundColor: Colors.green,
                             content: Text("Registration done Successfully ")),
@@ -85,15 +86,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   builder: (context, state) {
                     return CustomButton(
                     isLoading: state is RegistrationLoadingState,
-                    
+
                       loadingColor: Colors.yellow[900]!,
                       title: 'Register',
                       backgroundColor: Colors.blue[800]!,
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
+                      onPressed: () async{
+                        if (formKey.currentState!.validate())  {
                           BlocProvider.of<RegistrationCubit>(context)
                               .registerAccount(
                                   email: email, password: password);
+                      // await  FirebaseAuth.instance
+                      //       .createUserWithEmailAndPassword(email: email, password: password);
+
+
+
                         } else {
                           setState(() {
                             autovalidateMode = AutovalidateMode.always;
